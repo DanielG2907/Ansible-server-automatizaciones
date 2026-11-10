@@ -6,7 +6,7 @@
     DEBIAN_FRONTEND: noninteractive
 
   vars_files:
-    - secrets.yml
+    - secretos.yml
 
   vars:
     postfix_myhostname: "{{ inventory_hostname }}"
