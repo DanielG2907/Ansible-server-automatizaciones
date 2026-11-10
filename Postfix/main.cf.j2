@@ -1,33 +1,30 @@
-cat << 'EOF' > main.cf.j2
-# --------------------------------------------------------
-# Archivo autogenerado por Ansible - NO EDITAR A MANO
-# --------------------------------------------------------
+# Archivo generado por Ansible. No editar manualmente en el servidor.
+
+# Identidad del servidor
 smtpd_banner = $myhostname ESMTP $mail_name
 biff = no
 append_dot_mydomain = no
 readme_directory = no
 compatibility_level = 3
 
-# --- Nombres y dominios ---
 myhostname = {{ postfix_myhostname }}
 mydomain = {{ postfix_mydomain }}
 myorigin = /etc/mailname
 
-# --- Configuración de Red ---
+# Escucha local: evita exponer Postfix como relay abierto
 inet_interfaces = loopback-only
 inet_protocols = ipv4
 mydestination = $myhostname, localhost.$mydomain, localhost
 
-# --- Configuración del Relay ---
+# Relay SMTP
 relayhost = {{ postfix_relayhost }}
 
-# --- Seguridad y TLS hacia el Relay ---
+# TLS hacia el servidor relay
 smtp_use_tls = yes
 smtp_tls_security_level = may
 smtp_tls_note_starttls_offer = yes
 
-# --- Autenticación SASL (Office 365 / Exchange) ---
+# Autenticación SASL
 smtp_sasl_auth_enable = yes
 smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
 smtp_sasl_security_options = noanonymous
-EOF
